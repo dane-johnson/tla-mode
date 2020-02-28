@@ -7,7 +7,6 @@
     2.  [Auto keyword capitalization](#orgec72cb1)
     3.  [Simple code-indentation](#org2fa4cea)
     4.  [Pretty symbols](#orga052b52)
-    5.  [Auto template insertion](#org5fb0312)
 
 
 <a id="org5f27ac5"></a>
@@ -109,12 +108,3 @@ To make this work correctly, do the following:
     prettify-symbols-mode).  To do this always, add a hook
 
 	(add-hook 'tla-mode 'prettify-symbols-mode)
-
-
-<a id="org5fb0312"></a>
-
-## Auto template insertion
-
-When opening an empty .tla file, the Module header and footer is automatically added.
-This can be prevented by setting tla-template-by-default to nil.
-
