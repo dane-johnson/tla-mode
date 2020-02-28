@@ -60,9 +60,6 @@
 
 (defvar tla-tab-width 2 "Width of a tab.")
 
-(defvar tla-template-by-default t
-  "If t then auto insert a tla template into empty files.")
-
 (defun tla-fixcase-keywords (beg end length)
   "Automatically fix case for keywords starting at BEG to END with LENGTH."
   ;; 1. Check if region is small. based on beg/end.
@@ -108,44 +105,6 @@
 	     (setq indent-col (current-column)))))
     indent-col))
 
-
-
-(defun tla-template ()
-  "Insert a TLA template"
-  (interactive)
-  (let ((this-file-name (buffer-file-name)) ; absolute file name or nil
-	(insertion-point 0)
-	(fill-len 0)) ;; Extra chars on first line to get to 80
-    (when this-file-name          ;; for legal files
-      (goto-char 1)               ;; at beginning of file
-      (setq this-file-name
-	    (file-name-sans-extension
-	     (file-name-nondirectory
-	      this-file-name)))
-      (setq fill-len
-	(- 80
-	   (+ 13 (string-width this-file-name))))
-      (setq fill-len
-	    (if (< fill-len 0) 0  fill-len))
-      (insert
-       (make-string 4 ?-)         ;; 4 dashes
-       " MODULE "
-       this-file-name
-       " "
-       (make-string fill-len ?-)
-       "\n"
-       "(* Documentation *)\n"
-       (make-string 80 ?-)
-       "\n")
-      (setq insertion-point (point))
-      (insert
-       "\n"
-       (make-string 80 ?=)
-       "\n\n"
-       )
-      (goto-char insertion-point)
-      )
-    ))
 
 
 (defun tla-indent-line ()
@@ -247,8 +206,8 @@
     (modify-syntax-entry ?\) ". 4bn" st)
 
     ;; /* is a comment
-    (modify-syntax-entry ?\\ ". 12b" st)
-    (modify-syntax-entry ?\n "> b" st)
+    (modify-syntax-entry ?\\ ". 1c" st)
+    (modify-syntax-entry ?\n "> c" st)
     ; Return st
     st
     )
@@ -338,8 +297,8 @@
       ("|=" . ?⊨)
       ;;"=|" no good rendering
       ("\\sim" . ?∼)
-      ("->" . ?⭢)
-      ("<-" . ?⭠)
+      ("->" . ?→)
+      ("<-" . ?←)
       ("\\simeq" . ?≃)
       ("\\cap" . ?∩)          ("\\intersect" . ?∩)
       ("\\cup" . ?∪)          ("\\union" . ?∪)
@@ -388,10 +347,6 @@
   ;; Debugging args fail with starter kit.
   (add-hook 'after-change-functions 'tla-fixcase-keywords t t)
   (prettify-symbols-mode)
-  (when (and tla-template-by-default
-	     (= (point-max) 1))
-    (tla-template))
-
   )
 
 
