@@ -77,34 +77,4 @@ prettify-symbols-mode.
     ensure that they have the same width as the character sequence
     they replace.
 
-Note the following:
-
-1.  TLA+ is indentation sensitive. So it is useful to use a
-    mono-spaced font.
-2.  Monospaced coding fonts have only a small number of the symbols
-    that TLA+ actually supports.
-3.  It is possible to use a fallback font. i.e. a fallback font is
-    used for a symbol if the primary font does not have a rendering
-    for the symbol.
-4.  However, even if a fallback font is used, the width of characters
-    with that font will be different from the primary font causing
-    inconsistent spacing.
-
-To make this work correctly, do the following:
-
-1.  Find a fallback font that supports symbols and has the same
-    width as the primary font. Luckily, a good soul has a solution
-    for this.   <https://github.com/cpitclaudel/monospacifier> has a tool to
-    adjust a variable width font to match the width of a reference
-    font.  The same site also has ready to download symbol fonts
-    that are already fixed up to match some commonly used coding fonts.
-2.  Symbola is a font with good symbol support.  To add it as a
-    fallback font, do something like the following.
-
-	(dolist (ft (fontset-list))
-	  (set-fontset-font ft 'unicode (font-spec :name "Consolas"))
-	  (set-fontset-font ft 'unicode (font-spec :name "Symbola monospacified for Consolas") nil 'append))
-3.  In tla-mode,  enable prettify-symbols-mode  (M-x
-    prettify-symbols-mode).  To do this always, add a hook
-
-	(add-hook 'tla-mode 'prettify-symbols-mode)
+DejaVu Sans Mono has good unicode support. Make it your fallback
